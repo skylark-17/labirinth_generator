@@ -1,5 +1,8 @@
 import random
 from colorama import Back, Style
+from sys import setrecursionlimit
+
+setrecursionlimit(10000)
 
 
 class Maze:
@@ -62,8 +65,8 @@ def print_maze(maze):
 
 
 def dfs_generation(n, m):
-    n += 1 - n % 2
-    m += 1 - m % 2
+    n += 1 - (n % 2)
+    m += 1 - (m % 2)
     maze = Maze(n, m)
     unvisited = list()
     for i in range(n):
@@ -104,6 +107,8 @@ def dfs_generation(n, m):
 
 
 def spanning_tree_generation(n, m):
+    n += 1 - (n % 2)
+    m += 1 - (m % 2)
     maze = Maze(n, m)
     for i in range(n):
         for j in range(m):
@@ -167,12 +172,26 @@ def find_path(maze, x=1, y=1):
     return False
 
 
-res = spanning_tree_generation(21, 21)
-print_maze(res)
-print_maze(find_path(res))
+def programm():
+    while True:
+        print("Enter labyrinth's width and length, or \"exit\" to exit programm")
+        width = input()
+        if width == "exit":
+            break
+        width = int(width)
+        length = int(input())
+        print("Enter type of labyrinth generation: 1 - dfs, 2 - spanning tree")
+        labyrinth_type = input()
+        if labyrinth_type == "1":
+            maze = dfs_generation(width, length)
+        else:
+            maze = spanning_tree_generation(width, length)
+        print_maze(maze)
+        print("Do you want to see solution? Y - yes, N - no")
+        answer = input()
+        if answer == "Y":
+            solution = find_path(maze)
+            print_maze(solution)
 
-print()
 
-res = dfs_generation(21, 21)
-print_maze(res)
-print_maze(find_path(res))
+programm()
