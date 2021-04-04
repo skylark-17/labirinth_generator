@@ -187,6 +187,7 @@ def programm():
         else:
             maze = spanning_tree_generation(width, length)
         print_maze(maze)
+
         print("Do you want to see solution? Y - yes, N - no")
         answer = input()
         if answer == "Y":
